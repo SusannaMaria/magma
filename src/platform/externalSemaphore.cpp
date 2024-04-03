@@ -22,6 +22,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 #include "../allocator/allocator.h"
 #include "../misc/extension.h"
 #include "../exceptions/errorResult.h"
+#ifdef __unix__
+#include <unistd.h>
+#endif
 
 namespace magma
 {
@@ -115,7 +118,7 @@ ExternalSemaphore::ExternalSemaphore(std::shared_ptr<Device> device,
     #endif
     importFdInfo.fd = fd;
     MAGMA_REQUIRED_DEVICE_EXTENSION(vkImportSemaphoreFdKHR, VK_KHR_EXTERNAL_SEMAPHORE_FD_EXTENSION_NAME);
-    result = vkImportSemaphoreFdKHR(MAGMA_HANDLE(device), &importFdInfo);
+    const VkResult result = vkImportSemaphoreFdKHR(MAGMA_HANDLE(device), &importFdInfo);
     #ifdef VK_USE_PLATFORM_ANDROID_KHR
     MAGMA_HANDLE_RESULT(result, "failed to import Android fence descriptor");
     #else

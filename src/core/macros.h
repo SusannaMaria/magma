@@ -102,3 +102,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 #define MAGMA_TYPEDEF_SHARED_PTR_INTERFACE(Type) typedef std::shared_ptr<class I##Type> Type##Ptr
 
 #define MAGMA_TYPEDEF_UNIQUE_PTR(Type) typedef std::unique_ptr<class Type> Type##Ptr
+
+#ifdef __unix__
+template<typename C>inline int strcpy_s(C*d,unsigned long dmax,const C*s){if(dmax<=1||!d){if(!d||!dmax)return 22;*d=C(0);return 0;}for(C*de=d+dmax-1;(d!=de||(*d=C(0)))&&(*d=*s);++d,++s);return 0;}
+#endif

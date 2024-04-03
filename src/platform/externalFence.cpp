@@ -22,6 +22,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 #include "../allocator/allocator.h"
 #include "../misc/extension.h"
 #include "../exceptions/errorResult.h"
+#ifdef __unix__
+#include <unistd.h>
+#endif
 
 namespace magma
 {
